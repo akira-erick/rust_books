@@ -22,8 +22,8 @@ impl BookRepository for InMemoryBookRepository {
         self.books.iter().find(|book| book.id == id)
     }
 
-    fn list(&self) -> Vec<&Book> {
-        self.books.iter().collect()
+    fn list(&self) -> &[Book] {
+        &self.books
     }
 
     fn update(&mut self, book: Book) -> bool {
