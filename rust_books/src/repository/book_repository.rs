@@ -1,4 +1,6 @@
-trait BookRepository {
+use crate::types::book::Book;
+
+pub trait BookRepository {
     fn create(&mut self, book: Book);
     fn get(&self, id: u32) -> Option<&Book>;
     fn list(&self) -> Vec<&Book>;

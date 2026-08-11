@@ -1,9 +1,12 @@
-struct InMemoryBookRepository {
+use crate::types::book::Book;
+use crate::repository::book_repository::BookRepository;
+
+pub struct InMemoryBookRepository {
     books: Vec<Book>,
 }
 
 impl InMemoryBookRepository {
-    fn new() -> Self {
+    pub fn new() -> Self {
         Self {
             books: Vec::new(),
         }
