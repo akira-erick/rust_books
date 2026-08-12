@@ -1,4 +1,6 @@
-#[derive(Debug, Clone)]
+use std::fmt;
+
+#[derive(Clone)]
 pub struct Book {
     pub id: u32,
     pub title: String,
@@ -16,5 +18,19 @@ impl Book {
             publisher,
             pages,
         }
+    }
+}
+
+impl fmt::Display for Book {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(
+            f,
+            "ID: {}\nTítulo: {}\nAutor: {}\nEditora: {}\nPáginas: {}",
+            self.id,
+            self.title,
+            self.author,
+            self.publisher,
+            self.pages
+        )
     }
 }

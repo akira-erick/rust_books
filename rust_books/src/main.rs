@@ -7,52 +7,57 @@ use crate::repository::in_memory_book_repository::InMemoryBookRepository;
 use crate::services::book_service::{BookService, BookSort};
 
 fn main() {
-    let mut repository = InMemoryBookRepository::new();
+    let repository = InMemoryBookRepository::new();
     let mut service = BookService::new(repository);
 
     let mut input = String::new();
 
     println!("CRUD de Livros");
 
-    println!("1 - Inserir livro");
-    println!("2 - Alterar livro");
-    println!("3 - Apagar livro");
-    println!("4 - Exibir livro");
-    println!("5 - Listar livros");
-    println!("0 - Sair");
+    while input.trim() != "0" {
 
-    println!("Escolha uma opção: ");
+        println!("1 - Inserir livro");
+        println!("2 - Alterar livro");
+        println!("3 - Apagar livro");
+        println!("4 - Exibir livro");
+        println!("5 - Listar livros");
+        println!("0 - Sair");
 
-    std::io::stdin().read_line(&mut input).unwrap();
+        println!("Escolha uma opção: ");
 
-    let choice = input.trim().parse::<u32>().unwrap_or(0);
+        input.clear();
 
-    match choice {
-        1 => {
-            println!("Inserir livro");
-            insert_book(&mut service);
-        }
-        2 => {
-            println!("Alterar livro");
-            update_book(&mut service);
-        }
-        3 => {
-            println!("Apagar livro");
-            delete_book(&mut service);
-        }
-        4 => {
-            println!("Exibir livro");
-            display_book(&service);
-        }
-        5 => {
-            println!("Listar livros");
-            list_books(&service);
-        }
-        0 => {
-            println!("Saindo...");
-        }
-        _ => {
-            println!("Opção inválida");
+        std::io::stdin().read_line(&mut input).unwrap();
+
+        let choice = input.trim().parse::<u32>().unwrap_or(0);
+
+        match choice {
+            1 => {
+                println!("Inserir livro");
+                insert_book(&mut service);
+            }
+            2 => {
+                println!("Alterar livro");
+                update_book(&mut service);
+            }
+            3 => {
+                println!("Apagar livro");
+                delete_book(&mut service);
+            }
+            4 => {
+                println!("Exibir livro");
+                display_book(&service);
+            }
+            5 => {
+                println!("Listar livros");
+                list_books(&service);
+            }
+            0 => {
+                println!("Saindo...");
+            }
+            _ => {
+                println!("Opção inválida");
+            }
         }
     }
 }
@@ -122,13 +127,13 @@ fn display_book<R: BookRepository>(service: &BookService<R>) {
     let id = read_number("ID do livro a ser exibido: ");
 
     match service.get_book(id) {
-        Some(book) => println!("Livro encontrado: {:?}", book),
+        Some(book) => println!("Livro encontrado: {}", book),
         None => println!("Livro não encontrado."),
     }
 }
 
 fn list_books<R: BookRepository>(service: &BookService<R>) {
-    let sort_option = read_number("Escolha a opção de ordenação (1 - Título, 2 - Autor, 3 - Editora, 4 - Número de páginas): ");
+    let sort_option = read_number("Escolha a opção de ordenação (1 - ID, 2 - Título, 3 - Autor, 4 - Editora, 5 - Páginas): ");
 
     let sort = match sort_option {
        1 => BookSort::Id,
@@ -148,7 +153,8 @@ fn list_books<R: BookRepository>(service: &BookService<R>) {
         println!("Nenhum livro encontrado.");
     } else {
         for book in books {
-            println!("{:?}", book);
+            println!("{}", book);
+            println!("--------------------");
         }
     }
 }

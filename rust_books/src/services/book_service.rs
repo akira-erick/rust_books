@@ -26,10 +26,6 @@ impl<R: BookRepository> BookService<R> {
         self.repository.get(id)
     }
 
-    pub fn get_books(&self) -> &[Book] {
-        self.repository.list()
-    }
-
     pub fn update_book(&mut self, book: Book) -> Result<(), String> {
         if !self.repository.update(book) {
             return Err(String::from("Book not found"));
