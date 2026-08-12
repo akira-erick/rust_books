@@ -8,9 +8,9 @@ pub struct Book {
 }
 
 impl Book {
-    pub fn new(id: u32, title: String, author: String, publisher: String, pages: u32) -> Self {
+    pub fn new(title: String, author: String, publisher: String, pages: u32) -> Self {
         Book {
-            id,
+            id: 0,
             title,
             author,
             publisher,

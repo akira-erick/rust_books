@@ -2,6 +2,7 @@ use crate::repository::book_repository::BookRepository;
 use crate::types::book::Book;
 
 pub enum BookSort {
+    Id,
     Title,
     Author,
     Publisher,
@@ -17,14 +18,8 @@ impl<R: BookRepository> BookService<R> {
         Self { repository }
     }
 
-    pub fn create_book(&mut self, book: Book) -> Result<(), String> {
-        if self.repository.get(book.id).is_some() {
-            return Err(format!("A book with id {} already exists", book.id));
-        }
-
-        self.repository.create(book);
-
-        Ok(())
+    pub fn create_book(&mut self, book: Book) -> u32 {
+        self.repository.create(book)
     }
 
     pub fn get_book(&self, id: u32) -> Option<&Book> {
@@ -59,6 +54,7 @@ impl<R: BookRepository> BookService<R> {
             .collect();
 
         match sort {
+            BookSort::Id => books.sort_by(|a, b| a.id.cmp(&b.id)),
             BookSort::Title => books.sort_by(|a, b| a.title.cmp(&b.title)),
             BookSort::Author => books.sort_by(|a, b| a.author.cmp(&b.author)),
             BookSort::Publisher => books.sort_by(|a, b| a.publisher.cmp(&b.publisher)),
