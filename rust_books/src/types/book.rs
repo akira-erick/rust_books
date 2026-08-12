@@ -25,7 +25,7 @@ impl fmt::Display for Book {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(
             f,
-            "ID: {}\nTítulo: {}\nAutor: {}\nEditora: {}\nPáginas: {}",
+            "[{}] {} - {} ({}) - {} páginas",
             self.id,
             self.title,
             self.author,
